@@ -1,0 +1,39 @@
+-- SQL script to create tables for the wedding RSVP project
+
+-- Create weddings table
+CREATE TABLE weddings (
+    wedding_id INT AUTO_INCREMENT PRIMARY KEY,
+    couple_name VARCHAR(255) NOT NULL,
+    wedding_date DATE NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    latitude DECIMAL(10, 8),
+    longitude DECIMAL(11, 8),
+    other_wedding_details TEXT
+);
+
+-- Create rsvp_messages table
+CREATE TABLE rsvp_messages (
+    rsvp_id INT AUTO_INCREMENT PRIMARY KEY,
+    wedding_id INT NOT NULL,
+    guest_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    rsvp_confirmation ENUM('Yes', 'No') NOT NULL,
+    food_preferences TEXT,
+    message_to_couple TEXT,
+    FOREIGN KEY (wedding_id) REFERENCES weddings(wedding_id)
+);
+
+-- Insert some sample data into weddings table
+INSERT INTO weddings (couple_name, wedding_date, location, latitude, longitude, other_wedding_details)
+VALUES
+('John Doe & Jane Smith', '2024-09-01', 'Beach Resort, Miami', 25.7617, -80.1918, 'Join us for a beach wedding and celebration.'),
+('Mark Johnson & Emily Davis', '2024-10-15', 'Mountain Lodge, Aspen', 39.1911, -106.8175, 'Celebrate with us in the beautiful mountains of Aspen.'),
+('David Brown & Linda White', '2024-11-20', 'City Hall, New York', 40.7128, -74.0060, 'An elegant city wedding at the New York City Hall.');
+
+-- Insert some sample data into rsvp_messages table
+INSERT INTO rsvp_messages (wedding_id, guest_name, email, rsvp_confirmation, food_preferences, message_to_couple)
+VALUES
+(1, 'Alice Johnson', 'alice@example.com', 'Yes', 'Vegetarian', 'Congratulations! Looking forward to the big day.'),
+(2, 'Bob Martin', 'bob@example.com', 'No', 'N/A', 'Sorry, I cannot make it. Best wishes!'),
+(3, 'Catherine Green', 'catherine@example.com', 'Yes', 'No preference', 'Can’t wait to celebrate with you!');
+
